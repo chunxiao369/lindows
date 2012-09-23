@@ -2,7 +2,7 @@
 #ifndef __YUN_FILES_H__
 #define __YUN_FILES_H__
 
-#include <dirent.h>
+#include <yun_unix.h>
 typedef struct {
     DIR                         *dir;
     struct dirent               *de;

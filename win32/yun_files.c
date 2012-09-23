@@ -1,7 +1,4 @@
-#include <windows.h>
-#include <stdio.h>
 #include <yun_files.h>
-#include "Shlwapi.h"
 int yun_open_dir(const char *name, yun_dir_t *dir)
 {
     dir->dir = FindFirstFile(name, &dir->finddata);
@@ -21,7 +18,7 @@ int yun_read_dir(yun_dir_t *dir)
     return 1;
 }
 
-int convertUTF8UTF16(const char* name, int size8, char* utf16, int *size16)
+static int convertUTF8UTF16(const char* name, int size8, char* utf16, int *size16)
 {
     unsigned char *utf8 = (unsigned char *)name;
     int count =0, i;

@@ -2,6 +2,7 @@
 #ifndef __YUN_FILES_H__
 #define __YUN_FILES_H__
 
+#include "yun_win32.h"
 typedef struct {
     HANDLE                          dir;
     WIN32_FIND_DATA                 finddata;

@@ -10,7 +10,7 @@
 #
 
 CC = gcc
-CFLAGS = -Wall -O2 -I./unix/
+CFLAGS = -Wall -O2 -MD -I./unix/
 LDFLAGS = 
 TARGET = test_lindows
 OBJS = yun_sys.o \
@@ -33,4 +33,4 @@ $(TARGET):$(OBJS)
 	$(COMPILE)
 
 clean:
-	rm -f  *~ *.d *.o $(TARGET)
+	rm -f  *.d *.o $(TARGET)

@@ -1,4 +1,3 @@
-#include <yun_unix.h>
 #include <yun_files.h>
 
 int yun_open_dir(char *name, yun_dir_t *dir)

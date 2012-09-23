@@ -1,5 +1,4 @@
-#include <stdint.h>
-#include <windows.h>
+#include "yun_time.h"
 void
 yun_gettimeofday(struct timeval *tp)
 {
