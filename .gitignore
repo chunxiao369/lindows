@@ -17,3 +17,14 @@
 # exe
 *.exe
 test_lindows
+*.svn*
+
+_yundriver.exp
+driver.c
+unix.mk
+win32.mk
+win32/compat.h
+win32/snappy.c
+win32/snappy.h
+yundriver_wrap.c
+
