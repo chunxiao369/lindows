@@ -74,8 +74,7 @@ yun_fd_t yun_open_file(const char *name, u_long mode, u_long access)
     return fd;
 }
 
-int 
-yun_read_file(yun_fd_t fd, u_char *buf, size_t size, off_t offset)
+int yun_read_file(yun_fd_t fd, u_char *buf, size_t size, off_t offset)
 {
     u_long      n;
     OVERLAPPED  ovlp, *povlp;
