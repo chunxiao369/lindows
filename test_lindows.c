@@ -7,9 +7,9 @@ int test_files(void)
 {
     yun_dir_t dir;
     yun_fd_t fd;
-    u_char buf[16];
+    u_char buf[18];
     int ret = 0;
-    int size = 128;
+    int len;
     int offset = 0;
 
     /* open dir not valid */
@@ -20,7 +20,8 @@ int test_files(void)
     }
 
     /* read valid dir and open it */
-    ret = yun_open_dir("unix", &dir);
+    memset(&dir, 0, sizeof(yun_dir_t));
+    ret = yun_open_dir("win32", &dir);
     if (ret) {
         printf("error! func: %s, line: %d.\n", __func__, __LINE__);
         return 1;
@@ -45,15 +46,17 @@ int test_files(void)
         return 1;
     }
     while (offset < 256) {
-        strcpy(buf, "0123456789abcdef");
-        ret = yun_write_file(fd, buf, 16, offset);
-        if (ret) {
+        memset(buf, 0, 17);
+        sprintf((char*)buf, "%d\n", offset);
+        len = strlen((char*)buf);
+        ret = yun_write_file(fd, buf, len, offset);
+        if (ret <= 0) {
             printf("error! func: %s, line: %d.\n", __func__, __LINE__);
             return 1;
         }
-        offset += 16;
+        offset += len;
     }
-    yun_close_file(&fd);
+    yun_close_file(fd);
 
     /* open noexit file writeonly; write something; close file */
     fd = yun_open_file("notexit", YUN_FILE_RDONLY, 0);
@@ -64,18 +67,31 @@ int test_files(void)
     offset = 0;
     while (1) {
         ret = yun_read_file(fd, buf, 16, offset);
-        printf("buf: %s.\n", (char *)buf);
-        if (ret) {
+        //printf("%s", (char *)buf);
+        if (ret <= 0) {
             break;
         }
         offset += 16;
     }
-    yun_close_file(&fd);
+    yun_close_file(fd);
+    printf("used: %llu, free: %llu.\n", yun_fs_busy_size("D:"),
+           yun_fs_free_size("D:"));
+    printf("used: %llu, free: %llu.\n", yun_fs_busy_size("E:"),
+           yun_fs_free_size("E:"));
+#if 0
+    printf("used: %llu, free: %llu.\n", yun_fs_busy_size("/run"),
+           yun_fs_free_size("/run"));
+    printf("used: %llu, free: %llu.\n", yun_fs_busy_size("/mnt/virtual-disk"),
+           yun_fs_free_size("/mnt/virtual-disk"));
+    printf("used: %llu, free: %llu.\n", yun_fs_busy_size("/mnt/E-disk"),
+           yun_fs_free_size("/mnt/E-disk"));
+#endif
     return 0;
 }
 
 int test_socket(void)
 {
+    printf("local ip: %s.\n", get_local_ip_address());
     return 0;
 }
 
@@ -86,6 +102,15 @@ int test_sys(void)
 
 int test_time(void)
 {
+	struct timeval tv;
+	yun_gettimeofday(&tv);
+	printf("second: %ld, usecond: %ld.\n", tv.tv_sec, tv.tv_usec);
+    yun_msleep(1);
+	yun_gettimeofday(&tv);
+	printf("second: %ld, usecond: %ld.\n", tv.tv_sec, tv.tv_usec);
+    yun_sleep(1);
+	yun_gettimeofday(&tv);
+	printf("second: %ld, usecond: %ld.\n", tv.tv_sec, tv.tv_usec);
     return 0;
 }
 

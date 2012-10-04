@@ -19,6 +19,7 @@ int yun_read_dir(yun_dir_t *dir);
 #define YUN_FILE_WRONLY             GENERIC_WRITE
 #define YUN_FILE_RDWR               GENERIC_READ|GENERIC_WRITE
 #define YUN_FILE_APPEND             FILE_APPEND_DATA|SYNCHRONIZE
+#define YUN_FILE_CREATE             OPEN_ALWAYS
 
 #define YUN_FILE_DEFAULT_ACCESS     0
 #define YUN_FILE_OWNER_ACCESS       0
@@ -28,12 +29,13 @@ int yun_read_dir(yun_dir_t *dir);
 
 typedef HANDLE yun_fd_t;
 yun_fd_t yun_open_file(const char *name, u_long mode, u_long access);
-#define yun_close_file              CloseHandle
-#define yun_file_access(fi) 0
+int yun_close_file(yun_fd_t fd);
+#define yun_file_access(fi)         PathFileExists(fi)
 
 int yun_read_file(yun_fd_t fd, u_char *buf, size_t size, off_t offset);
 int yun_write_file(yun_fd_t fd, u_char *buf, size_t size, off_t offset);
 
-size_t yun_fs_free_size(u_char *name);
+uint64_t yun_fs_free_size(const char *name);
+uint64_t yun_fs_busy_size(const char *name);
 #define yun_getcwd(buf, size)       GetCurrentDirectory(size, (char *) buf)
 #endif

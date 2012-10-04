@@ -11,7 +11,7 @@
 #!include <win32.mak>
 CC = cc 
 CFLAGS = /Tx86-coff -Ze -Zx -Go -O2 -c /Iwin32
-LDFLAGS = kernel32.lib shlwapi.lib
+LDFLAGS = kernel32.lib shlwapi.lib ws2_32.lib 
 TARGET = test_lindows.exe 
 OBJS = yun_sys.obj \
 yun_socket.obj \

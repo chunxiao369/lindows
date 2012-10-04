@@ -11,4 +11,6 @@
 #include <sys/time.h>
 
 #define yun_gettimeofday(tp)  (void) gettimeofday(tp, NULL);
+#define yun_msleep(ms)        (void) usleep(ms * 1000)
+#define yun_sleep(s)          (void) sleep(s)
 #endif
