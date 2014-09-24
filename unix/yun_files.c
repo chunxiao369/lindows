@@ -1,3 +1,10 @@
+/**
+ * @file yun_files.c
+ * @Synopsis
+ * @author xu.chunxiao@embedway.com
+ * @version 0.1.1
+ * @date 2014-09-24
+ */
 #include <yun_files.h>
 
 int yun_open_dir(const char *name, yun_dir_t *dir)
